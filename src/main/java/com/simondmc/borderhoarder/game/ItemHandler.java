@@ -9,6 +9,9 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
+import java.io.*;
+
+
 public class ItemHandler {
 
     private static final Map<Material, UUID> collectedItems = new LinkedHashMap<>();
@@ -35,6 +38,17 @@ public class ItemHandler {
                 recipient.sendMessage("§a" + (recipient == p ? "You" : p.getName()) + " collected " + conjuction + itemName + "!");
                 recipient.playSound(recipient.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
             }
+	    //write log
+	    try{
+	    File logfile = new File("bh.log");
+	    FileWriter fw = new FileWriter(logfile.getAbsoluteFile(), true);
+	    BufferedWriter bw = new BufferedWriter(fw);
+	    bw.write(p.getName()+" collected "+ itemName+"\n");
+	    bw.close();
+	    }
+	    catch (IOException e) {
+		System.out.println("IO EXCEPTION");
+	    }
             // expand border
             BorderExpander.expandBorder();
             // save data

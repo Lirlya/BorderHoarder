@@ -17,10 +17,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.io.*;
 
 public class PlayerListener implements Listener {
 
@@ -53,6 +55,25 @@ public class PlayerListener implements Listener {
             }
         }
     }
+
+    @EventHandler
+    public void onDie(PlayerDeathEvent e) throws InterruptedException {
+	    String mess = e.getDeathMessage();
+            try{
+            File logfile = new File("death.log");
+            FileWriter fw = new FileWriter(logfile.getAbsoluteFile(), true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(mess+"\n");
+            bw.close();
+            }
+            catch (IOException ex) {
+                System.out.println("IO EXCEPTION");
+            }
+
+
+    }
+
+
 
     // clear title if kicked during generation
     @EventHandler
